@@ -20,7 +20,14 @@ SHEET_URL = "https://docs.google.com/spreadsheets/d/1B34FqK4aJWeJtm4RLLN2AqlBJ-n
 WORKSHEET = "Triagem"
 USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
-df = carregar_dados_gsheets(SHEET_URL, WORKSHEET, USECOLS)
+#df = carregar_dados_gsheets(SHEET_URL, WORKSHEET, USECOLS)
+
+try:
+    df = carregar_dados_gsheets(SHEET_URL, WORKSHEET, USECOLS)
+except Exception as e:
+    st.error(f"Erro ao carregar dados: {e}")
+    raise
+
 
 # Título principal
 st.title("📋 Device Verification Workflow")
