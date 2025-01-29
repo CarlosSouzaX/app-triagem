@@ -153,7 +153,7 @@ def runoff_flow(device_brand):
 
     if question_data:
         st.subheader("📋 Triagem de Dispositivo")
-        st.write(f"**{question_data['question']}**")
+        #st.write(f"**{question_data['question']}**")
 
         # Usa selectbox ao invés de radio para evitar a opção extra
         response = st.selectbox(
