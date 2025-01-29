@@ -28,7 +28,7 @@ def advance_to_next_question():
     """
 
     current_question = st.session_state.current_question
-    st.write("Estado atual:", st.session_state)
+    #st.write("Estado atual:", st.session_state)
 
     questions = st.session_state.questions
     final_states = st.session_state.final_states
@@ -153,7 +153,7 @@ def runoff_flow(device_brand):
 
     if question_data:
         st.subheader("📋 Triagem de Dispositivo")
-        #st.write(f"**{question_data['question']}**")
+        st.write(f"**{question_data['question']}**")
 
         # Usa selectbox ao invés de radio para evitar a opção extra
         response = st.selectbox(
