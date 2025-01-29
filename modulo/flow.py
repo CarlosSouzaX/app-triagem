@@ -43,86 +43,19 @@ def advance_to_next_question():
     else:
         st.session_state.current_question = next_step
 
+        import streamlit as st
+
 def runoff_flow(device_brand):
     """
     Fluxo Funcional com avanço imediato no botão "Próximo" e validação do status SR.
     """
 
-    st.session_state.questions = {
-        "Q1": {
-            "question": "O IMEI está correto?",
-            "options": ["Sim", "Não", "Não Sei"],
-            "next": {
-                "Sim": "Q2",
-                "Não": "END_DevolverRecebimento",
-                "Não Sei": "END_AT"
-            }
-        },
-        "Q2": {
-            "question": "O Modelo está correto?",
-            "options": ["Sim", "Não"],
-            "next": {
-                "Sim": "Q3",
-                "Não": "END_DevolverRecebimento"
-            }
-        },
-        "Q3": {
-            "question": "O dispositivo está na Blacklist?",
-            "options": ["Sim", "Não"],
-            "next": {
-                "Sim": "END_DevolverPicking",
-                "Não": "Q4_FMiP" if device_brand in ["Apple", "Xiaomi"] else "Q4.2"
-            }
-        },
-        "Q4_FMiP": {
-            "question": "O dispositivo está com FMiP ativo?",
-            "options": ["Sim", "Não"],
-            "next": {
-                "Sim": "END_DevolverPicking",
-                "Não": "Q4.2"
-            }
-        },
-        "Q4.2": {
-            "question": "Teve contato líquido?",
-            "options": ["Sim", "Não"],
-            "next": {
-                "Sim": "END_Fabrica",
-                "Não": "Q4.3"
-            }
-        },
-        "Q4.3": {
-            "question": "O sensor de umidade (gaveta do chip) está ativado?",
-            "options": ["Sim", "Não"],
-            "next": {
-                "Sim": "END_Fabrica",
-                "Não": "Q4.4"
-            }
-        },
-        "Q4.4": {
-            "question": "Tem evidências de carbonização?",
-            "options": ["Sim", "Não"],
-            "next": {
-                "Sim": "END_Fabrica",
-                "Não": "Q4.1"
-            }
-        },
-        "Q4.1": {
-            "question": "Teve dano por impacto?",
-            "options": ["Sim", "Não"],
-            "next": {
-                "Sim": "END_Reparo_Mesmo",
-                "Não": "Q4.5"
-            }
-        },
-        "Q4.5": {
-            "question": "O device está no período de garantia?",
-            "options": ["Sim", "Não"],
-            "next": {
-                "Sim": "END_Garantia",
-                "Não": "END_Reparo",
-            }
-        }
-    }
+    # Inicializa estados da sessão se não existirem
+    if "current_question" not in st.session_state:
+        st.session_state.current_question = "Q1"
+
+    if "responses" not in st.session_state:
+        st.session_state.responses = {}
 
     if "final_states" not in st.session_state:
         st.session_state.final_states = {
@@ -137,46 +70,105 @@ def runoff_flow(device_brand):
             "END_Garantia": "Encaminhar para garantia."
         }
 
+    if "questions" not in st.session_state:
+        st.session_state.questions = {
+            "Q1": {
+                "question": "O IMEI está correto?",
+                "options": ["Sim", "Não", "Não Sei"],
+                "next": {
+                    "Sim": "Q2",
+                    "Não": "END_DevolverRecebimento",
+                    "Não Sei": "END_AT"
+                }
+            },
+            "Q2": {
+                "question": "O Modelo está correto?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "Q3",
+                    "Não": "END_DevolverRecebimento"
+                }
+            },
+            "Q3": {
+                "question": "O dispositivo está na Blacklist?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "END_DevolverPicking",
+                    "Não": "Q4_FMiP" if device_brand in ["Apple", "Xiaomi"] else "Q4.2"
+                }
+            },
+            "Q4_FMiP": {
+                "question": "O dispositivo está com FMiP ativo?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "END_DevolverPicking",
+                    "Não": "Q4.2"
+                }
+            },
+            "Q4.2": {
+                "question": "Teve contato líquido?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "END_Fabrica",
+                    "Não": "Q4.3"
+                }
+            },
+            "Q4.3": {
+                "question": "O sensor de umidade (gaveta do chip) está ativado?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "END_Fabrica",
+                    "Não": "Q4.4"
+                }
+            },
+            "Q4.4": {
+                "question": "Tem evidências de carbonização?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "END_Fabrica",
+                    "Não": "Q4.1"
+                }
+            },
+            "Q4.1": {
+                "question": "Teve dano por impacto?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "END_Reparo_Mesmo",
+                    "Não": "Q4.5"
+                }
+            },
+            "Q4.5": {
+                "question": "O device está no período de garantia?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "END_Garantia",
+                    "Não": "END_Reparo",
+                }
+            }
+        }
+
     current_question = st.session_state.current_question
     questions = st.session_state.questions
     question_data = questions.get(current_question)
 
     if question_data:
-        options = ["Selecione uma opção"] + question_data["options"]
-
+        st.subheader("📋 Triagem de Dispositivo")
         st.write(f"**{question_data['question']}**")
-        response = st.radio(
+
+        # Usa selectbox ao invés de radio para evitar a opção extra
+        response = st.selectbox(
             "Escolha uma opção:",
-            options=options,
-            index=0,
+            question_data["options"],
             key=f"q{current_question}"
         )
 
-        if response != "Selecione uma opção":
+        # Salva resposta e avança
+        if response:
             st.session_state.responses[current_question] = response
 
-        is_next_enabled = response != "Selecione uma opção"
-
-        st.button(
-            "Próximo",
-            disabled=not is_next_enabled,
-            on_click=advance_to_next_question
-        )
+            st.button("Próximo", on_click=advance_to_next_question)
     else:
         st.warning("⚠️ Fluxo finalizado.")
         st.session_state["fluxo_finalizado"] = True  # Marca o fluxo como finalizado
 
 
-"""
-# Reinicializar estado
-if "fluxo_finalizado" not in st.session_state:
-    st.session_state["fluxo_finalizado"] = False
-
-if st.session_state["fluxo_finalizado"]:
-    if st.button("Reiniciar"):
-        inicializar_estado()
-        st.session_state["current_question"] = "Q1"
-        st.session_state["responses"] = {}
-        st.session_state["fluxo_finalizado"] = False
-        st.success("Fluxo reiniciado!")
-"""
