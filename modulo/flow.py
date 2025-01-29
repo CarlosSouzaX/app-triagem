@@ -22,7 +22,6 @@ def carregar_modelos_ativos_json():
         print(f"Erro ao carregar modelos ativos: {e}")
         return []
 
-import streamlit as st
 
 def runoff_flow(device_brand):
     """
@@ -43,7 +42,7 @@ def runoff_flow(device_brand):
             "END_DevolverPicking": "Devolver ao Picking e rejeitar SR.",
             "END_TriagemJuridico": "Manter em triagem e acionar jurídico.",
             "END_Bloqueio": "Bloquear IMEI e dispositivo (Blacklist).",
-            "END_Fabrica": "Encaminhar para análise na fábrica.",
+            "END_Fabrica": "Encaminhar para análise na Engenharia",
             "END_Reparo": "Encaminhar para Reparo Like New.",
             "END_Reparo_Mesmo": "Encaminhar para IN-HOUSE (Reparo do Mesmo).",
             "END_Garantia": "Encaminhar para garantia."
@@ -69,7 +68,7 @@ def runoff_flow(device_brand):
                 }
             },
             "Q3": {
-                "question": "O dispositivo está na Blacklist?",
+                "question": "O dispositivo está listado como 'Blocklist'?",
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_DevolverPicking",
@@ -81,11 +80,19 @@ def runoff_flow(device_brand):
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_DevolverPicking",
+                    "Não": "Q4.1"
+                }
+            },
+            "Q4.1": {
+                "question": "O sensor de umidade (gaveta do chip) está ativado ou teve contato com líquido?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "END_Fabrica",
                     "Não": "Q4.2"
                 }
             },
             "Q4.2": {
-                "question": "Teve contato líquido?",
+                "question": "Tem evidências de carbonização?",
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_Fabrica",
@@ -93,30 +100,14 @@ def runoff_flow(device_brand):
                 }
             },
             "Q4.3": {
-                "question": "O sensor de umidade (gaveta do chip) está ativado?",
-                "options": ["Sim", "Não"],
-                "next": {
-                    "Sim": "END_Fabrica",
-                    "Não": "Q4.4"
-                }
-            },
-            "Q4.4": {
-                "question": "Tem evidências de carbonização?",
-                "options": ["Sim", "Não"],
-                "next": {
-                    "Sim": "END_Fabrica",
-                    "Não": "Q4.1"
-                }
-            },
-            "Q4.1": {
                 "question": "Teve dano por impacto?",
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_Reparo_Mesmo",
-                    "Não": "Q4.5"
+                    "Não": "Q4.4"
                 }
             },
-            "Q4.5": {
+            "Q4.4": {
                 "question": "O device está no período de garantia?",
                 "options": ["Sim", "Não"],
                 "next": {

@@ -187,8 +187,8 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
         modelo in modelos_ativos and # Verifica se o modelo está na lista de modelos ativos
         status_sr in ["open", "arrived"] and  # Status da SR deve ser "open" ou "arrived"
         not reincidente and  # Não deve ser reincidente 
-        runoff == "runoff" and # Deve ser vazio (não default)
-        mdm_payjoy != "pay_joy" # Deve ser vazio
+        runoff == "runoff"  # Deve ser vazio (não default)
+        #mdm_payjoy != "pay_joy" # Deve ser vazio
     ):
         return "RUNOFF"
     
