@@ -22,28 +22,7 @@ def carregar_modelos_ativos_json():
         print(f"Erro ao carregar modelos ativos: {e}")
         return []
 
-def advance_to_next_question():
-    """
-    Avança para a próxima pergunta ou exibe o estado final.
-    """
-
-    current_question = st.session_state.current_question
-    #st.write("Estado atual:", st.session_state)
-
-    questions = st.session_state.questions
-    final_states = st.session_state.final_states
-
-    response = st.session_state.responses.get(current_question)
-
-    # Obter o próximo passo
-    next_step = questions[current_question]["next"].get(response)
-    if next_step in final_states:
-        st.success(f"Estado Final: {final_states[next_step]}")
-        st.session_state["fluxo_finalizado"] = True  # Marca o fluxo como finalizado
-    else:
-        st.session_state.current_question = next_step
-
-        import streamlit as st
+import streamlit as st
 
 def runoff_flow(device_brand):
     """
@@ -171,4 +150,22 @@ def runoff_flow(device_brand):
         st.warning("⚠️ Fluxo finalizado.")
         st.session_state["fluxo_finalizado"] = True  # Marca o fluxo como finalizado
 
+
+def advance_to_next_question():
+    """Avança para a próxima pergunta no fluxo baseado na resposta do usuário."""
+    current_question = st.session_state.current_question
+    response = st.session_state.responses.get(current_question)
+
+    if response:
+        next_question = st.session_state.questions[current_question]["next"].get(response)
+
+        if next_question:
+            # Atualiza para a próxima pergunta ou finaliza o fluxo
+            if next_question.startswith("END_"):
+                st.session_state["fluxo_finalizado"] = True
+                st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
+            else:
+                st.session_state.current_question = next_question
+        else:
+            st.error("Erro: Opção inválida no fluxo!")
 
