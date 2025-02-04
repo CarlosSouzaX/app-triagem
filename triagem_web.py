@@ -37,7 +37,7 @@ col1, col2, col3 = st.columns([1, 0.1, 1])  # Ajustar proporções das colunas
 
 # Primeira coluna: Buscar Modelo pelo Device
 with col1:
-    st.header("🔍 Buscar Modelo pelo Device")
+    st.subheader("🔍 Buscar Modelo pelo Device")
 
     # Campo de texto vinculado ao estado
     device_input = st.text_input("Digite o número do Device:")
@@ -162,7 +162,7 @@ with col2:
 
 # Terceira coluna: Triagem de Produtos
 with col3:
-    st.subheader("⚙️ Triagem de Produtos")
+    #st.subheader("⚙️ Triagem de Produtos")
 
     esteira = obter_estado("esteira")
 
@@ -173,6 +173,7 @@ with col3:
         device_brand = obter_estado("marca")
 
         if esteira == "RUNOFF":
+            st.session_state.setdefault("marca", device_brand)
             runoff_flow(device_brand)
             #st.session_state["fluxo_finalizado"] = True
         else:
