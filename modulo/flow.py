@@ -150,13 +150,23 @@ def runoff_flow(device_brand):
                 st.session_state.current_question = question_data["prev"]
 
         with col2:
-            # ✅ Botão "Próximo" agora avança na primeira tentativa SEM precisar clicar duas vezes
+            # ✅ Botão "Próximo" agora avança corretamente
             if st.button("➡ Próximo", key=f"next_{current_question}", disabled=not st.session_state["botao_habilitado"]):
                 st.session_state.responses[current_question] = response
-                st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
-                st.session_state.current_question = question_data["next"][response]
+                next_question = question_data["next"][response]
 
- 
+                # ✅ Se for um estado final, exibe a mensagem e para o fluxo
+                if next_question.startswith("END_"):
+                    st.session_state["fluxo_finalizado"] = True
+                    st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
+                else:
+                    st.session_state.current_question = next_question
+                    st.session_state["trocar_pergunta"] = True  # Ativa o trigger para atualização
+
+        # ✅ Aplica a troca de pergunta automaticamente
+        if st.session_state.get("trocar_pergunta", False):
+            st.session_state["trocar_pergunta"] = False  # Reseta o trigger
+            st.rerun()  # 🚀 Atualiza a interface corretamente
                
 
         
