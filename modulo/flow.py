@@ -7,11 +7,8 @@ from modulo.state_manager import inicializar_estado
 def carregar_modelos_ativos_json():
     """
     Carrega a lista de modelos ativos para reparo de um arquivo JSON localizado na pasta 'data'.
-
-    Returns:
-        list: Lista de modelos ativos.
     """
-    base_dir = os.path.dirname(__file__)  # Diretório atual
+    base_dir = os.path.dirname(__file__)
     caminho_modelos_ativos = os.path.join(base_dir, "../data/modelos_ativos_ln.json")
 
     try:
@@ -123,6 +120,7 @@ def runoff_flow(device_brand):
     st.session_state.setdefault("responses", {})
     st.session_state.setdefault("final_states", carregar_final_states())
     st.session_state.setdefault("questions", carregar_perguntas(device_brand))
+    st.session_state.setdefault("trigger_rerun", False)
 
     exibir_pergunta()
 
@@ -149,7 +147,8 @@ def exibir_pergunta():
             if response:
                 st.session_state.responses[current_question] = response
                 advance_to_next_question()
-                st.experimental_rerun()
+                st.session_state.trigger_rerun = True  # Marca que precisa recarregar
+
     else:
         st.warning("⚠️ Fluxo finalizado.")
         st.session_state["fluxo_finalizado"] = True  # Marca o fluxo como finalizado
@@ -170,5 +169,3 @@ def advance_to_next_question():
                 st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
             else:
                 st.session_state.current_question = next_question
-        else:
-            st.error("Erro: Opção inválida no fluxo!")
