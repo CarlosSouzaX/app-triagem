@@ -56,15 +56,14 @@ with col3:
     #st.subheader("⚙️ Triagem de Produtos")
 
     esteira = obter_estado("esteira")
+    device_brand = obter_estado("marca")
 
     if esteira:
         st.info(f"🚀 Esteira de Atendimento: **{esteira}**")
-
-        # Executar o fluxo com os dados fornecidos
-        device_brand = obter_estado("marca")
+        st.markdown(''':blue-backgound[{device_brand}]''')
 
         if esteira == "RUNOFF":
-            st.session_state.setdefault("marca", device_brand)
+            
             runoff_flow(device_brand)
             #st.session_state["fluxo_finalizado"] = True
         else:
