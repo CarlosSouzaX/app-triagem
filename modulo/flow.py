@@ -123,6 +123,8 @@ def runoff_flow(device_brand):
 
     if question_data:
         st.subheader("📋 Triagem de Dispositivo")
+        
+        st.write(f"**{question_data['question']}**")
 
         # ✅ Selectbox primeiro para capturar a resposta
         response = st.selectbox(
@@ -145,7 +147,7 @@ def runoff_flow(device_brand):
                 st.session_state.responses[current_question] = response
                 advance_to_next_question()
 
-        st.write(f"**{question_data['question']}**")
+        
 
         
     else:
