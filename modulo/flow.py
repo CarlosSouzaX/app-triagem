@@ -156,10 +156,7 @@ def runoff_flow(device_brand):
                 st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
                 st.session_state.current_question = question_data["next"][response]
 
-        # ✅ Aplica a troca de pergunta automaticamente sem `st.experimental_rerun()`
-        if st.session_state.get("trocar_pergunta", False):
-            st.session_state["trocar_pergunta"] = False  # Reseta o trigger
-            st.rerun()  # 🚀 Atualiza a interface corretamente
+ 
                
 
         
