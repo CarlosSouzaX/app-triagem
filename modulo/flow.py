@@ -144,7 +144,7 @@ def runoff_flow(device_brand):
         else:
             st.session_state["botao_habilitado"] = False
 
-        col1, col2 = st.columns([1, 1])
+        col1, col2, col3, col4, col5, col6 = st.columns([1, 1, 1, 1, 1, 1])
 
         with col1:
             if "prev" in question_data and st.button("⬅ Voltar", key=f"prev_{current_question}"):
@@ -155,6 +155,7 @@ def runoff_flow(device_brand):
             if st.button("➡ Próximo", key=f"next_{current_question}", disabled=not st.session_state["botao_habilitado"]):
                 st.session_state.responses[current_question] = response
                 advance_to_next_question()
+                st.experimental_rerun()
 
         
 
