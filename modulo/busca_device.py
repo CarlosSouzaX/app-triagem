@@ -72,6 +72,7 @@ def buscar_device(df):
                         st.error(f"❌ {campo.capitalize()}: {valor}")
                 if campo == "imei":
                     if status == "success":
+                        st.session_state["imei"] = valor
                         st.success(f"✅ {campo.capitalize()}: **{valor}**")
                     elif status == "warning":
                         st.warning(f"⚠️ {campo.capitalize()}: {valor}")
