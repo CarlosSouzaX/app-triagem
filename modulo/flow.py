@@ -124,6 +124,13 @@ def runoff_flow(device_brand):
     if question_data:
         st.subheader("📋 Triagem de Dispositivo")
 
+        # Usa selectbox ao invés de radio para evitar a opção extra
+        response = st.selectbox(
+            "Escolha uma opção:",
+            question_data["options"],
+            key=f"q{current_question}"
+        )
+        
         # ✅ Botão "Próximo" ACIMA da seleção
         if st.button("➡ Próximo", key=f"next_{current_question}"):
             if response:  # Salva resposta antes de avançar
@@ -132,12 +139,7 @@ def runoff_flow(device_brand):
 
         st.write(f"**{question_data['question']}**")
 
-        # Usa selectbox ao invés de radio para evitar a opção extra
-        response = st.selectbox(
-            "Escolha uma opção:",
-            question_data["options"],
-            key=f"q{current_question}"
-        )
+        
     else:
         st.warning("⚠️ Fluxo finalizado.")
         st.session_state["fluxo_finalizado"] = True  # Marca o fluxo como finalizado
