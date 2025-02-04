@@ -126,24 +126,29 @@ def runoff_flow(device_brand):
         
         st.write(f"**{question_data['question']}**")
 
+        # ✅ Define a chave do selectbox no session_state para garantir persistência
+        if f"q{current_question}" not in st.session_state:
+            st.session_state[f"q{current_question}"] = "Selecione uma opção"
+
         # ✅ Selectbox primeiro para capturar a resposta
         response = st.selectbox(
             "Escolha uma opção:",
-            ["Selecione uma opção"] + question_data["options"],  # Adiciona um placeholder
+            ["Selecione uma opção"] + question_data["options"],  # Placeholder como primeira opção
             key=f"q{current_question}"
         )
 
-        # ✅ Botão "Próximo" só ativa se uma resposta válida for escolhida
-        is_disabled = response == "Selecione uma opção"
+        # ✅ Atualiza o session_state para ativar o botão apenas quando necessário
+        st.session_state["botao_habilitado"] = response != "Selecione uma opção"
 
-        col1, col2 = st.columns([1, 1])
+        col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
 
         with col1:
             if "prev" in question_data and st.button("⬅ Voltar", key=f"prev_{current_question}"):
                 voltar_pergunta()
 
         with col2:
-            if st.button("➡ Próximo", key=f"next_{current_question}", disabled=is_disabled):
+            # ✅ Botão "Próximo" agora é ativado corretamente após a seleção
+            if st.button("➡ Próximo", key=f"next_{current_question}", disabled=not st.session_state["botao_habilitado"]):
                 st.session_state.responses[current_question] = response
                 advance_to_next_question()
 
