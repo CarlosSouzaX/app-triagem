@@ -52,7 +52,7 @@ def buscar_device(df):
                 valor = detalhe["valor"]
 
                 # Exibe dados do Device
-                st.subheader("📱 Dados do Device")
+                #st.subheader("📱 Dados do Device")
                  # Exibe o campo com base no status
                 if campo == "marca":
                     if status == "success":
@@ -79,7 +79,7 @@ def buscar_device(df):
                         st.error(f"❌ {campo.capitalize()}: {valor}")
             
                 # Exibe dados da SR
-                st.subheader("📄 Dados da SR")
+                #st.subheader("📄 Dados da SR")
 
                 if campo == "sr":
                     if status == "success":
