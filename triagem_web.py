@@ -59,8 +59,8 @@ with col3:
     device_brand = obter_estado("marca")
 
     if esteira:
-        st.info(f"🚀 Esteira de Atendimento: **{esteira}**")
-        st.markdown(''':blue-backgound[{device_brand}]''')
+        st.info(f"Esteira de Atendimento: **{esteira}**")
+        st.info(f"Modelo: **{device_brand}**")
 
         if esteira == "RUNOFF":
             
