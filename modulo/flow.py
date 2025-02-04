@@ -126,36 +126,41 @@ def runoff_flow(device_brand):
         
         st.write(f"**{question_data['question']}**")
 
-        # ✅ Inicializa a resposta no session_state para garantir persistência
         key_response = f"q{current_question}"
+
+        # ✅ Inicializa a resposta no session_state
         if key_response not in st.session_state:
             st.session_state[key_response] = "Selecione uma opção"
 
-        # ✅ Selectbox primeiro para capturar a resposta
+        # ✅ Captura a resposta do usuário
         response = st.selectbox(
             "Escolha uma opção:",
-            ["Selecione uma opção"] + question_data["options"],  # Placeholder como primeira opção
+            ["Selecione uma opção"] + question_data["options"],  # Placeholder
             key=key_response
         )
 
-        # ✅ Atualiza o estado imediatamente após a seleção
-        if response != "Selecione uma opção":
-            st.session_state["botao_habilitado"] = True
-        else:
-            st.session_state["botao_habilitado"] = False
+        # ✅ Atualiza o estado imediatamente após seleção
+        st.session_state["botao_habilitado"] = response != "Selecione uma opção"
 
         col1, col2, col3, col4, col5, col6 = st.columns([1, 1, 1, 1, 1, 1])
 
         with col1:
             if "prev" in question_data and st.button("⬅ Voltar", key=f"prev_{current_question}"):
-                voltar_pergunta()
+                st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
+                st.session_state.current_question = question_data["prev"]
 
         with col2:
-            # ✅ Botão "Próximo" é ativado imediatamente após selecionar uma opção válida
+            # ✅ Botão "Próximo" agora avança na primeira tentativa SEM precisar clicar duas vezes
             if st.button("➡ Próximo", key=f"next_{current_question}", disabled=not st.session_state["botao_habilitado"]):
                 st.session_state.responses[current_question] = response
-                advance_to_next_question()
-                st.experimental_rerun()
+                st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
+                st.session_state.current_question = question_data["next"][response]
+
+        # ✅ Aplica a troca de pergunta automaticamente sem `st.experimental_rerun()`
+        if st.session_state.get("trocar_pergunta", False):
+            st.session_state["trocar_pergunta"] = False  # Reseta o trigger
+            st.rerun()  # 🚀 Atualiza a interface corretamente
+               
 
         
 
