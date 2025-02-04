@@ -1,5 +1,6 @@
 import streamlit as st
 from modulo.data_processor import buscar_modelo_por_device
+from modulo.aux_func import get_status_component  # Importa a função auxiliar
 
 def buscar_device(df):
     """
@@ -15,22 +16,6 @@ def buscar_device(df):
 
         # Chama a função de busca
         result = buscar_modelo_por_device(df, device_input)
-
-        # Mapeamento de cores e ícones para o status_sr
-        status_componentes = {
-            "open": st.success,  # Verde
-            "arrived": st.success,  # Verde
-            "tracked": st.warning,  # Amarelo
-            "swapped": st.warning,  # Amarelo
-            "sent": st.warning,  # Amarelo
-            "closed": st.info,  # Azul Claro
-            "lost_in_delivery": st.error,  # Vermelho
-            "rejected_documents": st.error,  # Vermelho
-            "logistics_failure_from_pitzi": st.error,  # Vermelho
-            "expired": st.error,  # Vermelho
-            "rejected_closed": st.error,  # Vermelho
-            "rejected_sent": st.error  # Vermelho
-        }
 
         # Verifica o status geral
         if result["status"] == "success":
@@ -100,7 +85,7 @@ def buscar_device(df):
                         st.error(f"❌ **Supplier Device:** **{valor}**")
 
                 if campo == "status_sr":
-                    componente = status_componentes.get(valor)
+                    componente = get_status_component(valor)
                     st.session_state["status_sr"] = valor
                     if componente:  # Se o status estiver mapeado, exibe com o componente correspondente
                         componente(f"✅ **Status SR:** **{valor}**")
