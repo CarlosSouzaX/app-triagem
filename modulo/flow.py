@@ -124,16 +124,24 @@ def runoff_flow(device_brand):
     if question_data:
         st.subheader("📋 Triagem de Dispositivo")
 
-        # Usa selectbox ao invés de radio para evitar a opção extra
+        # ✅ Selectbox primeiro para capturar a resposta
         response = st.selectbox(
             "Escolha uma opção:",
-            question_data["options"],
+            ["Selecione uma opção"] + question_data["options"],  # Adiciona um placeholder
             key=f"q{current_question}"
         )
-        
-        # ✅ Botão "Próximo" ACIMA da seleção
-        if st.button("➡ Próximo", key=f"next_{current_question}"):
-            if response:  # Salva resposta antes de avançar
+
+        # ✅ Botão "Próximo" só ativa se uma resposta válida for escolhida
+        is_disabled = response == "Selecione uma opção"
+
+        col1, col2 = st.columns([1, 1])
+
+        with col1:
+            if "prev" in question_data and st.button("⬅ Voltar", key=f"prev_{current_question}"):
+                voltar_pergunta()
+
+        with col2:
+            if st.button("➡ Próximo", key=f"next_{current_question}", disabled=is_disabled):
                 st.session_state.responses[current_question] = response
                 advance_to_next_question()
 
