@@ -4,6 +4,8 @@ from streamlit_gsheets import GSheetsConnection
 from modulo.data_loader import carregar_dados_gsheets
 from modulo.data_processor import buscar_modelo_por_device
 from modulo.state_manager import inicializar_estado, resetar_estado, obter_estado
+from modulo.busca_device import buscar_device
+
 
 from modulo.flow import (
     runoff_flow
@@ -34,15 +36,13 @@ st.title("📋 Device Verification Workflow")
 
 # Layout com colunas para incluir divisor vertical
 col1, col2, col3 = st.columns([1, 0.1, 1])  # Ajustar proporções das colunas
-# Recuperar os dados armazenados no estado
-marca = st.session_state.get("marca", "")
-modelo = st.session_state.get("modelo", "")
-imei = st.session_state.get("imei", "")
-sr = st.session_state.get("sr", "")
 
 
 # Primeira coluna: Buscar Modelo pelo Device
 with col1:
+    buscar_device(df)
+
+'''    
     st.subheader("🔍 Buscar Modelo pelo Device")
 
     # Campo de texto vinculado ao estado
@@ -144,12 +144,6 @@ with col1:
                     else:  # Caso o status não esteja no mapeamento, exibe um aviso genérico
                         st.warning(f"⚠️ **Status SR:** {valor} (Status não reconhecido)")
 
-            st.session_state["marca"] = result.get("marca", "")
-            st.session_state["modelo"] = result.get("modelo", "")
-            st.session_state["imei"] = result.get("imei", "")
-            st.session_state["sr"] = result.get("sr", "")
-            st.session_state["esteira"] = result.get("esteira", "")
-
             # Mostrar a observação do cliente com destaque
             st.subheader("📌 Observação do Cliente")
             obs_cliente = result.get("obs_cliente", None)  # Obtém a observação do cliente do resultado
@@ -162,6 +156,7 @@ with col1:
             st.warning(f"⚠️ {result['message']}")
         elif result["status"] == "error":
             st.error(f"❌ {result['message']}")
+'''
 
 # Divisor vertical na segunda coluna
 with col2:
