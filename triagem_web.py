@@ -34,6 +34,12 @@ st.title("📋 Device Verification Workflow")
 
 # Layout com colunas para incluir divisor vertical
 col1, col2, col3 = st.columns([1, 0.1, 1])  # Ajustar proporções das colunas
+# Recuperar os dados armazenados no estado
+marca = st.session_state.get("marca", "")
+modelo = st.session_state.get("modelo", "")
+imei = st.session_state.get("imei", "")
+sr = st.session_state.get("sr", "")
+
 
 # Primeira coluna: Buscar Modelo pelo Device
 with col1:
@@ -137,6 +143,12 @@ with col1:
                         componente(f"✅ **Status SR:** **{valor}**")
                     else:  # Caso o status não esteja no mapeamento, exibe um aviso genérico
                         st.warning(f"⚠️ **Status SR:** {valor} (Status não reconhecido)")
+
+            st.session_state["marca"] = result.get("marca", "")
+            st.session_state["modelo"] = result.get("modelo", "")
+            st.session_state["imei"] = result.get("imei", "")
+            st.session_state["sr"] = result.get("sr", "")
+            st.session_state["esteira"] = result.get("esteira", "")
 
             # Mostrar a observação do cliente com destaque
             st.subheader("📌 Observação do Cliente")

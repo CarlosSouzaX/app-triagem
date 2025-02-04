@@ -159,4 +159,7 @@ def advance_to_next_question():
                 st.session_state.current_question = next_question
         else:
             st.error("Erro: Opção inválida no fluxo!")
+    
+    st.rerun()
+
 
