@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from streamlit_gsheets import GSheetsConnection
 from modulo.data_loader import carregar_dados_gsheets
-from modulo.data_processor import buscar_modelo_por_device
 from modulo.state_manager import inicializar_estado, resetar_estado, obter_estado
 from modulo.busca_device import buscar_device
 
@@ -57,10 +56,13 @@ with col3:
 
     esteira = obter_estado("esteira")
     device_brand = obter_estado("marca")
-
+    model = obter_estado("modelo")
+    imei = obter_estado("imei")
+    
     if esteira:
         st.info(f"Esteira de Atendimento: **{esteira}**")
-        st.info(f"Modelo: **{device_brand}**")
+        st.info(f"Modelo: **{model}**")
+        st.info(f"IMEI: **{imei}**")
 
         if esteira == "RUNOFF":
             

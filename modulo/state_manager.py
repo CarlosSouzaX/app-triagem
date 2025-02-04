@@ -11,6 +11,7 @@ def inicializar_estado():
         # Estados do dispositivo
         "device_input": "",
         "esteira": None,
+        "imei": None,
         "marca": None,
         "modelo": None,
         "status_sr": None,
