@@ -69,7 +69,7 @@ def runoff_flow(device_brand):
                 "prev": "Q1"
             },
             "Q3": {
-                "question": "O dispositivo está listado como 'Blocklist'? [Link](https://ui.prologmobile.com/Home)",
+                "question": "O dispositivo está listado como 'Blocklist'? <a href='https://ui.prologmobile.com/Home' target='_blank'>🔗 Link</a>",
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_DevolverPicking",
