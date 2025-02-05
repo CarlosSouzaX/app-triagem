@@ -65,6 +65,10 @@ def runoff_flow(device_brand):
                 "next": {
                     "Sim": "Q3",
                     "Não": "END_DevolverRecebimento"
+                },
+                "prev": {
+                    "Sim": "Q1",
+                    "Não": "Q1"
                 }
             },
             "Q3": {
@@ -124,23 +128,6 @@ def runoff_flow(device_brand):
     if question_data:
         
         st.write(f"**{question_data['question']}**")
-        
-        if "prev" in question_data and st.button("⬅ Voltar", key=f"prev_{current_question}"):
-            st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
-            st.session_state.current_question = question_data["prev"]
-
-        # ✅ Botão "Próximo" agora avança corretamente
-        if st.button("➡ Próximo", key=f"next_{current_question}", disabled=not st.session_state["botao_habilitado"]):
-            st.session_state.responses[current_question] = response
-            next_question = question_data["next"][response]
-
-            # ✅ Se for um estado final, exibe a mensagem e para o fluxo
-            if next_question.startswith("END_"):
-                st.session_state["fluxo_finalizado"] = True
-                st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
-            else:
-                st.session_state.current_question = next_question
-                st.session_state["trocar_pergunta"] = True  # Ativa o trigger para atualização
 
         key_response = f"q{current_question}"
 
@@ -158,8 +145,24 @@ def runoff_flow(device_brand):
         # ✅ Atualiza o estado imediatamente após seleção
         st.session_state["botao_habilitado"] = response != "Selecione uma opção"
 
+        st.write("")
+        
+        if "prev" in question_data and st.button("⬅ Voltar", key=f"prev_{current_question}"):
+            st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
+            st.session_state.current_question = question_data["prev"]
 
+        # ✅ Botão "Próximo" agora avança corretamente
+        if st.button("➡ Próximo", key=f"next_{current_question}", disabled=not st.session_state["botao_habilitado"]):
+            st.session_state.responses[current_question] = response
+            next_question = question_data["next"][response]
 
+            # ✅ Se for um estado final, exibe a mensagem e para o fluxo
+            if next_question.startswith("END_"):
+                st.session_state["fluxo_finalizado"] = True
+                st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
+            else:
+                st.session_state.current_question = next_question
+                st.session_state["trocar_pergunta"] = True  # Ativa o trigger para atualização
 
 
         # ✅ Aplica a troca de pergunta automaticamente
