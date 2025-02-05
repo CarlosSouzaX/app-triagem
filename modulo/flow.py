@@ -69,7 +69,7 @@ def runoff_flow(device_brand):
                 "prev": "Q1"
             },
             "Q3": {
-                "question": "O dispositivo está listado como 'Blocklist'?",
+                "question": "O dispositivo está listado como 'Blocklist'? [Link](https://ui.prologmobile.com/Home)",
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_DevolverPicking",
@@ -77,7 +77,7 @@ def runoff_flow(device_brand):
                 }
             },
             "Q4_FMiP": {
-                "question": "O dispositivo está com FMiP ativo?",
+                "question": "O dispositivo está com FMiP ativo? [Apple](https://ui.prologmobile.com/Home), [Xiaomi](https://mifirm.net/)",
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_DevolverPicking",
