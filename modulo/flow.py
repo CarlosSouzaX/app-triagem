@@ -150,8 +150,6 @@ def runoff_flow(device_brand):
             if st.button("⬅ Voltar", key=f"prev_{current_question}"):
                 st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
                 st.session_state.current_question = question_data["prev"]
-        else:
-            st.warning("⚠️ Não há pergunta anterior definida ou `prev` está incorreto.")
 
 
         # ✅ Botão "Próximo" agora avança corretamente
