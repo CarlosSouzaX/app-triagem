@@ -60,6 +60,7 @@ with col3:
     imei = obter_estado("imei")
     
     if esteira:
+        st.subheader("📋 Triagem de Dispositivo")
         st.info(f"Esteira de Atendimento: **{esteira}**")
         st.info(f"Modelo: **{model}**")
         st.info(f"IMEI: **{imei}**")
