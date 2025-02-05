@@ -142,13 +142,17 @@ def runoff_flow(device_brand):
         # ✅ Atualiza o estado imediatamente após seleção
         st.session_state["botao_habilitado"] = response != "Selecione uma opção"
 
-        st.write("")
-        st.write("")
-        st.write("")
+        espaco = st.empty()
+        espaco.write("\n" * 10)  # Adiciona 10 linhas em branco
 
-        if "prev" in question_data and st.button("⬅ Voltar", key=f"prev_{current_question}"):
-            st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
-            st.session_state.current_question = question_data["prev"]
+
+        if "prev" in question_data and isinstance(question_data["prev"], str):  
+            if st.button("⬅ Voltar", key=f"prev_{current_question}"):
+                st.session_state["trocar_pergunta"] = True  # Ativa o trigger para a mudança
+                st.session_state.current_question = question_data["prev"]
+        else:
+            st.warning("⚠️ Não há pergunta anterior definida ou `prev` está incorreto.")
+
 
         # ✅ Botão "Próximo" agora avança corretamente
         if st.button("➡ Próximo", key=f"next_{current_question}", disabled=not st.session_state["botao_habilitado"]):
