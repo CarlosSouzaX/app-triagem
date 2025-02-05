@@ -75,7 +75,20 @@ with col3:
         st.warning("⚠️ Nenhuma esteira foi selecionada. Realize uma busca do device no campo disponível.")
 
 
-    # Exibir botão "Reiniciar" apenas se o fluxo estiver finalizado
-    if obter_estado("fluxo_finalizado") and st.button("Reiniciar"):
-        resetar_estado(grupo="fluxo")
-        resetar_estado(grupo="dispositivo")
+   # 🔹 Exibir botão "Reiniciar" apenas quando o fluxo terminar
+    if st.session_state.get("fluxo_finalizado", False):  
+        st.markdown("<br><br>", unsafe_allow_html=True)  # Adiciona espaçamento
+        
+        if st.button("🔄 Reiniciar"):
+            # ✅ Reseta completamente os estados antes de atualizar a interface
+            resetar_estado(grupo="fluxo")
+            resetar_estado(grupo="dispositivo")
+
+            # ✅ Garante que volte à primeira pergunta
+            st.session_state["fluxo_finalizado"] = False  
+            st.session_state.current_question = "Q1"
+            st.session_state.responses = {}  # Limpa as respostas anteriores
+            st.session_state["trocar_pergunta"] = False  # Remove qualquer trigger de atualização
+            
+            # 🚀 Atualiza a interface imediatamente após o reset
+            st.rerun()
