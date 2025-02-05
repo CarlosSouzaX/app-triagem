@@ -69,7 +69,7 @@ def runoff_flow(device_brand):
                 "prev": "Q1"
             },
             "Q3": {
-                "question": "O dispositivo está listado como 'Blocklist'? <a href='https://ui.prologmobile.com/Home' target='_blank'>🔗 Link</a>",
+                "question": "O dispositivo está listado como 'Blocklist'? [Apple](https://ui.prologmobile.com/Home)",
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_DevolverPicking",
@@ -124,7 +124,7 @@ def runoff_flow(device_brand):
 
     if question_data:
         
-        st.write(f"**{question_data['question']}**")
+        st.markdown(f"**{question_data['question']}**")
 
         key_response = f"q{current_question}"
 
