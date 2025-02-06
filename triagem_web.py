@@ -65,7 +65,6 @@ with col3:
         st.info(f"Esteira de Atendimento: **{esteira}**")
         st.info(f"Modelo: **{model}**")
         st.info(f"IMEI: **{imei}**")
-        st.info(f"SR: **{sr}**")
 
         if esteira == "RUNOFF":
             
