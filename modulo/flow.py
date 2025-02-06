@@ -23,7 +23,7 @@ def carregar_modelos_ativos_json():
         return []
 
 
-def runoff_flow(device_brand, sr):
+def runoff_flow(device_brand, sr, device):
     """
     Fluxo Funcional com avanço imediato no botão "Próximo" e validação do status SR.
     """
@@ -158,6 +158,9 @@ def runoff_flow(device_brand, sr):
                 st.warning(f"⚠️ Fluxo finalizado: {final_message}")
                 if next_question == "END_SCRAP":
                     st.markdown(f"🔗 [Acesse a SR {sr}](https://admin.pitzi.com.br/admin/service_requests/{sr}/edit) e anote: ***RUNOFF REJEITADO***")
+                if next_question == "END_Reparo_Mesmo":
+
+                    st.markdown(f"🔗 [Acesse o Device {device}](https://admin.pitzi.com.br/operations_admin/arrived_device_verifications/review?device_id={device}&from=%2Foperations_admin%2Farrived_device_verifications%2Fdevices")
 
 
             else:

@@ -59,6 +59,7 @@ with col3:
     model = obter_estado("modelo")
     imei = obter_estado("imei")
     sr = obter_estado("sr")
+    device = obter_estado("device_input")
     
     if esteira:
         st.subheader("📋 Triagem de Dispositivo")
@@ -68,7 +69,7 @@ with col3:
 
         if esteira == "RUNOFF":
             
-            runoff_flow(device_brand, sr)
+            runoff_flow(device_brand, sr, device)
             #st.session_state["fluxo_finalizado"] = True
         else:
             st.warning("⚠️ Fluxo não reconhecido ou não definido.")
