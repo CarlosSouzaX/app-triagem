@@ -46,7 +46,7 @@ def runoff_flow(device_brand, sr):
             "END_Reparo": "Encaminhar para Reparo Like New.",
             "END_Reparo_Mesmo": "Encaminhar para IN-HOUSE (Reparo do Mesmo).",
             "END_Garantia": "Encaminhar para garantia.",
-            "END_SCRAP": "Enviar device para Scrap. Informar 'RunOff Rejeitado' no Admin Notes na [SR](https://admin.pitzi.com.br/admin/service_requests/524518)"
+            "END_SCRAP": f"Enviar device para Scrap. Informar 'RunOff Rejeitado' no Admin Notes na [SR](https://admin.pitzi.com.br/admin/service_requests/{sr})"
         }
 
     if "questions" not in st.session_state:
