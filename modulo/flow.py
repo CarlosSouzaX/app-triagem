@@ -205,7 +205,7 @@ def advance_to_next_question():
 
                 st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
                 # ✅ Depuração: Exibir link puro para testar
-                st.write(f"[Testar link SR](https://admin.pitzi.com.br/admin/service_requests/{sr})")
+                st.markdown(f"⚠️ Fluxo finalizado: {final_message}", unsafe_allow_html=True)
             else:
                 st.session_state.current_question = next_question
         else:
