@@ -23,7 +23,7 @@ def carregar_modelos_ativos_json():
         return []
 
 
-def runoff_flow(device_brand):
+def runoff_flow(device_brand, sr):
     """
     Fluxo Funcional com avanço imediato no botão "Próximo" e validação do status SR.
     """
@@ -45,12 +45,21 @@ def runoff_flow(device_brand):
             "END_Fabrica": "Encaminhar para análise na Engenharia",
             "END_Reparo": "Encaminhar para Reparo Like New.",
             "END_Reparo_Mesmo": "Encaminhar para IN-HOUSE (Reparo do Mesmo).",
-            "END_Garantia": "Encaminhar para garantia."
+            "END_Garantia": "Encaminhar para garantia.",
+            "END_SCRAP": "Enviar device para Scrap. Informar 'RunOff Rejeitado' no Admin Notes na [SR](https://admin.pitzi.com.br/admin/service_requests/{sr})"
         }
 
     if "questions" not in st.session_state:
         st.session_state.questions = {
             "Q1": {
+                "question": "É possível identificar o IMEI?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "Q2",
+                    "Não": "END_DevolverRecebimento"
+                }
+            },
+            "Q2": {
                 "question": "O IMEI está correto?",
                 "options": ["Sim", "Não", "Não Sei"],
                 "next": {
@@ -59,7 +68,7 @@ def runoff_flow(device_brand):
                     "Não Sei": "END_AT"
                 }
             },
-            "Q2": {
+            "Q2.1": {
                 "question": "O Modelo está correto?",
                 "options": ["Sim", "Não"],
                 "next": {
