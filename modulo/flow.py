@@ -36,6 +36,7 @@ def runoff_flow(device_brand, sr):
         st.session_state.responses = {}
 
     if "final_states" not in st.session_state:
+        sr_placeholder = str(sr)  # Garante que sr seja tratado como string
         st.session_state.final_states = {
             "END_DevolverRecebimento": "Devolver para o Recebimento.",
             "END_AT": "Encaminhar para AT (Apple, Moto, Samsung, Infinix).",
@@ -46,7 +47,7 @@ def runoff_flow(device_brand, sr):
             "END_Reparo": "Encaminhar para Reparo Like New.",
             "END_Reparo_Mesmo": "Encaminhar para IN-HOUSE (Reparo do Mesmo).",
             "END_Garantia": "Encaminhar para garantia.",
-            "END_SCRAP": "Enviar device para Scrap. Informar 'RunOff Rejeitado' no Admin Notes na [SR](https://admin.pitzi.com.br/admin/service_requests/{sr})"
+            "END_SCRAP": f"Enviar device para Scrap. Informar 'RunOff Rejeitado' no Admin Notes na [SR](https://admin.pitzi.com.br/admin/service_requests/{sr_placeholder})"
         }
 
     if "questions" not in st.session_state:
@@ -197,13 +198,7 @@ def advance_to_next_question():
             # Atualiza para a próxima pergunta ou finaliza o fluxo
             if next_question.startswith("END_"):
                 st.session_state["fluxo_finalizado"] = True
-
                 final_message = st.session_state.final_states[next_question]
-                # Substitui apenas se a mensagem contiver {sr}, sem afetar "SR" como texto
-                if "{sr}" in final_message:
-                    final_message = final_message.replace("{sr}", str(sr))
-
-                #st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
                 st.warning(f"⚠️ Fluxo finalizado: {final_message}")                      
             else:
                 st.session_state.current_question = next_question
