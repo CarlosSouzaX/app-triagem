@@ -73,7 +73,7 @@ def runoff_flow(device_brand, sr):
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_DevolverPicking",
-                    "Não": "Q4_FMiP" if device_brand in ["Apple", "Xiaomi"] else "Q4.2"
+                    "Não": "Q4_FMiP" if device_brand in ["Apple", "Xiaomi"] else "Q4"
                 }
             },
             "Q4_FMiP": {
