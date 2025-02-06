@@ -169,7 +169,12 @@ def runoff_flow(device_brand, sr):
             # ✅ Se for um estado final, exibe a mensagem e para o fluxo
             if next_question.startswith("END_"):
                 st.session_state["fluxo_finalizado"] = True
-                st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
+                # Obtém a mensagem final do dicionário
+                final_message = st.session_state.final_states[next_question]
+                # Substitui {} pelo valor correto de sr
+                final_message = final_message.format(sr)
+                #st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
+                st.markdown(f"[🔗 Fluxo finalizado: {final_message}")
             else:
                 st.session_state.current_question = next_question
                 st.session_state["trocar_pergunta"] = True  # Ativa o trigger para atualização
