@@ -198,6 +198,8 @@ def advance_to_next_question():
             if next_question.startswith("END_"):
                 st.session_state["fluxo_finalizado"] = True
                 final_message = st.session_state.final_states[next_question]
+                st.markdown(f"[🔗 Fluxo finalizado: {final_message}")
+
                 st.warning(f"⚠️ Fluxo finalizado: {final_message}")                      
             else:
                 st.session_state.current_question = next_question
