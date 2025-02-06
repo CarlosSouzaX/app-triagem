@@ -46,7 +46,7 @@ def runoff_flow(device_brand, sr):
             "END_Reparo": "Encaminhar para Reparo Like New.",
             "END_Reparo_Mesmo": "Encaminhar para IN-HOUSE (Reparo do Mesmo).",
             "END_Garantia": "Encaminhar para garantia.",
-            "END_SCRAP": f"Enviar device para Scrap. Informar 'RunOff Rejeitado' no Admin Notes na [SR](https://admin.pitzi.com.br/admin/service_requests/{sr})"
+            "END_SCRAP": "Enviar device para Scrap."
         }
 
     if "questions" not in st.session_state:
@@ -171,10 +171,11 @@ def runoff_flow(device_brand, sr):
                 st.session_state["fluxo_finalizado"] = True
                 # Obtém a mensagem final do dicionário
                 final_message = st.session_state.final_states[next_question]
-                # Substitui {} pelo valor correto de sr
-                #final_message = final_message.format(sr)
-                #st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
-                st.markdown(f"🔗 Fluxo finalizado: {final_message}")
+                st.warning(f"⚠️ Fluxo finalizado: {final_message}")
+                if next_question == "END_SCRAP":
+                    st.markdown(f"🔗 [Acesse a SR {sr}](https://admin.pitzi.com.br/admin/service_requests/{sr}/edit) e anote: ***RUNOFF REJEITADO***")
+
+
             else:
                 st.session_state.current_question = next_question
                 st.session_state["trocar_pergunta"] = True  # Ativa o trigger para atualização
