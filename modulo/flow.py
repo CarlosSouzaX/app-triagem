@@ -37,7 +37,7 @@ def runoff_flow(device_brand, sr):
 
     if "final_states" not in st.session_state:
         st.session_state.final_states = {
-            "END_DevolverRecebimento": "Devolver para o Recebimento para correção",
+            "END_DevolverRecebimento": "Devolver para o Recebimento para correção de IMEI / MODELO",
             "END_AT": "Encaminhar para AT (Apple, Moto, Samsung, Infinix).",
             "END_DevolverPicking": "Devolver ao Picking e rejeitar SR.",
             "END_TriagemJuridico": "Manter em triagem e acionar jurídico.",
@@ -66,7 +66,6 @@ def runoff_flow(device_brand, sr):
                 "next": {
                     "Sim": "Q3",
                     "Não": "END_DevolverRecebimento"
-
                 }
             },
             "Q3": {
@@ -82,7 +81,7 @@ def runoff_flow(device_brand, sr):
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "END_CX",
-                    "Não": "Q3"
+                    "Não": "Q4"
                 }
             },
             "Q4": {
@@ -95,35 +94,19 @@ def runoff_flow(device_brand, sr):
                 "prev": "Q1"
             },
             "Q4.1": {
-                "question": "O sensor de umidade (gaveta do chip) está ativado ou teve contato com líquido?",
+                "question": "O dispositivo apresenta danos irreversíveis por LÍQUIDO, impossibilitando o reparo?",
                 "options": ["Sim", "Não"],
                 "next": {
-                    "Sim": "END_Fabrica",
+                    "Sim": "END_SCRAP",
                     "Não": "Q4.2"
                 }
             },
             "Q4.2": {
-                "question": "Tem evidências de carbonização?",
+                "question": "O dispositivo apresenta danos irreversíveis na PLACA, impossibilitando o reparo?",
                 "options": ["Sim", "Não"],
                 "next": {
-                    "Sim": "END_Fabrica",
-                    "Não": "Q4.3"
-                }
-            },
-            "Q4.3": {
-                "question": "Teve dano por impacto?",
-                "options": ["Sim", "Não"],
-                "next": {
-                    "Sim": "END_Reparo_Mesmo",
-                    "Não": "Q4.4"
-                }
-            },
-            "Q4.4": {
-                "question": "O device está no período de garantia?",
-                "options": ["Sim", "Não"],
-                "next": {
-                    "Sim": "END_Garantia",
-                    "Não": "END_Reparo",
+                    "Sim": "END_SCRAP",
+                    "Não": "END_Reparo_Mesmo"
                 }
             }
         }
