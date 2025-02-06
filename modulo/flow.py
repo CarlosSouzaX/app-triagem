@@ -185,7 +185,7 @@ def runoff_flow(device_brand, sr):
         st.session_state["fluxo_finalizado"] = True  # Marca o fluxo como finalizado
 
 
-def advance_to_next_question():
+'''def advance_to_next_question():
     """Avança para a próxima pergunta no fluxo baseado na resposta do usuário."""
     current_question = st.session_state.current_question
     response = st.session_state.responses.get(current_question)
@@ -204,5 +204,5 @@ def advance_to_next_question():
             else:
                 st.session_state.current_question = next_question
         else:
-            st.error("Erro: Opção inválida no fluxo!")
+            st.error("Erro: Opção inválida no fluxo!")'''
    
