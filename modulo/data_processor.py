@@ -12,11 +12,11 @@ def carregar_modelos_ativos_json():
         list: Lista de modelos ativos.
     """
     # Caminho absoluto para o arquivo JSON
-    base_dir = os.path.dirname(__file__)  # Diretório atual do data_processor.py
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Diretório atual do data_processor.py
     caminho_modelos_ativos = os.path.join(base_dir, "../data/modelos_ativos.json")
 
     try:
-        with open(caminho_modelos_ativos, "r") as f:
+        with open(caminho_modelos_ativos, "r", encoding="uft-8") as f:
             data = json.load(f)
         return data.get("modelos_ativos", [])  # Retorna a lista de modelos ativos
     except Exception as e:
