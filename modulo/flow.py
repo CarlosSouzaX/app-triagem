@@ -56,7 +56,7 @@ def runoff_flow(device_brand, sr):
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "Q2",
-                    "Não": "END_DevolverRecebimento"
+                    "Não": "END_SCRAP"
                 }
             },
             "Q2": {
