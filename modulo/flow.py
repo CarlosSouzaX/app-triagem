@@ -197,6 +197,12 @@ def advance_to_next_question():
             # Atualiza para a próxima pergunta ou finaliza o fluxo
             if next_question.startswith("END_"):
                 st.session_state["fluxo_finalizado"] = True
+
+                final_message = st.session_state.final_states[next_question]
+                # Substitui apenas se a mensagem contiver {sr}, sem afetar "SR" como texto
+                if "{sr}" in final_message:
+                    final_message = final_message.replace("{sr}", str(st.session_state.sr))
+
                 st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
             else:
                 st.session_state.current_question = next_question
