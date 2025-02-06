@@ -36,7 +36,6 @@ def runoff_flow(device_brand, sr):
         st.session_state.responses = {}
 
     if "final_states" not in st.session_state:
-        sr_placeholder = str(sr)  # Garante que sr seja tratado como string
         st.session_state.final_states = {
             "END_DevolverRecebimento": "Devolver para o Recebimento.",
             "END_AT": "Encaminhar para AT (Apple, Moto, Samsung, Infinix).",
@@ -47,7 +46,7 @@ def runoff_flow(device_brand, sr):
             "END_Reparo": "Encaminhar para Reparo Like New.",
             "END_Reparo_Mesmo": "Encaminhar para IN-HOUSE (Reparo do Mesmo).",
             "END_Garantia": "Encaminhar para garantia.",
-            "END_SCRAP": f"Enviar device para Scrap. Informar 'RunOff Rejeitado' no Admin Notes na [SR](https://admin.pitzi.com.br/admin/service_requests/{sr_placeholder})"
+            "END_SCRAP": "Enviar device para Scrap. Informar 'RunOff Rejeitado' no Admin Notes na [SR](https://admin.pitzi.com.br/admin/service_requests/524518)"
         }
 
     if "questions" not in st.session_state:
