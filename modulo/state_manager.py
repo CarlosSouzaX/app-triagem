@@ -14,6 +14,7 @@ def inicializar_estado():
         "imei": None,
         "marca": None,
         "modelo": None,
+        "sr": None,
         "status_sr": None,
         # Outros estados
         "observacao_cliente": "",
