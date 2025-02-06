@@ -84,6 +84,7 @@ def buscar_device(df):
 
                 if campo == "sr":
                     if status == "success":
+                        st.session_state["sr"] = valor
                         st.success(f"✅ **SR:** **{valor}**")
                     elif status == "warning":
                         st.warning(f"⚠️ **SR:** **{valor}**")
