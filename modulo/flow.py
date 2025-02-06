@@ -37,7 +37,7 @@ def runoff_flow(device_brand, sr):
 
     if "final_states" not in st.session_state:
         st.session_state.final_states = {
-            "END_DevolverRecebimento": "Devolver para o Recebimento.",
+            "END_DevolverRecebimento": "Devolver para o Recebimento para correção",
             "END_AT": "Encaminhar para AT (Apple, Moto, Samsung, Infinix).",
             "END_DevolverPicking": "Devolver ao Picking e rejeitar SR.",
             "END_TriagemJuridico": "Manter em triagem e acionar jurídico.",
@@ -46,7 +46,8 @@ def runoff_flow(device_brand, sr):
             "END_Reparo": "Encaminhar para Reparo Like New.",
             "END_Reparo_Mesmo": "Encaminhar para IN-HOUSE (Reparo do Mesmo).",
             "END_Garantia": "Encaminhar para garantia.",
-            "END_SCRAP": "Enviar device para Scrap."
+            "END_SCRAP": "Enviar device para Scrap.",
+            "END_CX": "Atendimento Técnico. Entrar em contato com o cliente para remover FMiP/FMD"
         }
 
     if "questions" not in st.session_state:
@@ -61,21 +62,12 @@ def runoff_flow(device_brand, sr):
             },
             "Q2": {
                 "question": "O IMEI está correto?",
-                "options": ["Sim", "Não", "Não Sei"],
-                "next": {
-                    "Sim": "Q2",
-                    "Não": "END_DevolverRecebimento",
-                    "Não Sei": "END_AT"
-                }
-            },
-            "Q2.1": {
-                "question": "O Modelo está correto?",
                 "options": ["Sim", "Não"],
                 "next": {
                     "Sim": "Q3",
                     "Não": "END_DevolverRecebimento"
-                },
-                "prev": "Q1"
+
+                }
             },
             "Q3": {
                 "question": "O dispositivo está listado como 'Blocklist'? [Link](https://ui.prologmobile.com/Home)",
@@ -89,9 +81,18 @@ def runoff_flow(device_brand, sr):
                 "question": "O dispositivo está com FMiP ativo? [Apple](https://ui.prologmobile.com/Home), [Xiaomi](https://mifirm.net/)",
                 "options": ["Sim", "Não"],
                 "next": {
-                    "Sim": "END_DevolverPicking",
-                    "Não": "Q4.1"
+                    "Sim": "END_CX",
+                    "Não": "Q3"
                 }
+            },
+            "Q4": {
+                "question": "O Modelo está correto?",
+                "options": ["Sim", "Não"],
+                "next": {
+                    "Sim": "Q4.1",
+                    "Não": "END_DevolverRecebimento"
+                },
+                "prev": "Q1"
             },
             "Q4.1": {
                 "question": "O sensor de umidade (gaveta do chip) está ativado ou teve contato com líquido?",
