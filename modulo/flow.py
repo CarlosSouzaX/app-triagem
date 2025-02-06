@@ -203,9 +203,8 @@ def advance_to_next_question():
                 if "{sr}" in final_message:
                     final_message = final_message.replace("{sr}", str(sr))
 
-                st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
-                # ✅ Depuração: Exibir link puro para testar
-                st.markdown(f"⚠️ Fluxo finalizado: {final_message}", unsafe_allow_html=True)
+                #st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
+                st.warning(f"⚠️ Fluxo finalizado: {final_message}")                      
             else:
                 st.session_state.current_question = next_question
         else:
