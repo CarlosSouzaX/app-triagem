@@ -201,7 +201,7 @@ def advance_to_next_question():
                 final_message = st.session_state.final_states[next_question]
                 # Substitui apenas se a mensagem contiver {sr}, sem afetar "SR" como texto
                 if "{sr}" in final_message:
-                    final_message = final_message.replace("{sr}", str(st.session_state.sr))
+                    final_message = final_message.replace("{sr}", str(sr))
 
                 st.warning(f"⚠️ Fluxo finalizado: {st.session_state.final_states[next_question]}")
             else:
