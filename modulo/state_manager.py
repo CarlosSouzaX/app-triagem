@@ -33,7 +33,7 @@ def resetar_estado(grupo=None):
     inicializar_estado()
     grupos = {
         "fluxo": ["current_question", "responses", "fluxo_finalizado"],
-        "dispositivo": ["device_input", "esteira", "imei", "marca", "modelo", "status_sr", "sr"],
+        "dispositivo": ["device_input", "esteira", "imei", "marca", "modelo", "sr", "status_sr"],
         "global": ["inicializado", "fluxo_finalizado"],
     }
 
