@@ -173,11 +173,17 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
         imei_status != "success" # IMEI deve estar válido
     ):
         return "DEVOLVER AO RECEBIMENTO / CHECAR IMEI PELA NF"
-        
-   # 2. Verifica RUNOFF
+
+    # 2. Verifica REINCIDENTE
+    if (
+        reincidente == True
+    ):
+        return "REINCIDENTE"       
+    
+   # 3. Verifica RUNOFF
     if (
         #modelo in modelos_ativos and 
-        status_sr in ["open", "arrived"] and  
+        status_sr == "arrived" and  
         (runoff == "runoff" or parceiro == "Mercado Livre")
     ):
         return "RUNOFF"

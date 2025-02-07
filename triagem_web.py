@@ -65,7 +65,14 @@ with col3:
     
     if esteira:
         st.subheader("📋 Triagem de Dispositivo")
-        st.info(f"Esteira de Atendimento: **{esteira}**")
+        st.markdown(
+            f"""
+            <div style="text-align: center; font-size: 24px; font-weight: bold; padding: 10px; background-color: #d9edf7; color: #31708f; border-radius: 5px;">
+                Esteira de Atendimento: <strong>{esteira}</strong>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         st.info(f"Modelo: **{model}**")
         st.info(f"IMEI: **{imei}**")
         st.info(f"Parceiro: **{parceiro}**")
