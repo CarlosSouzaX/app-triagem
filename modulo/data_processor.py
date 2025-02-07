@@ -114,16 +114,18 @@ def buscar_modelo_por_device(df, device_input):
             resultado_final["detalhes"].append({"campo": "supplier", "status": "warning", "valor": "Externo"})
         else:
             resultado_final["detalhes"].append({"campo": "supplier", "status": "success", "valor": "Pitzi"})
-
-       # Carrega os modelos ativos de um arquivo externo
-        modelos_ativos = carregar_modelos_ativos_json()
-
+        
         # Verifica o Parceiro
         parceiro = resultado.iloc[0, 7]  # Supondo que "parceiro" está na oitava coluna
         if pd.notnull(parceiro):
             resultado_final["detalhes"].append({"campo": "parceiro", "status": "success", "valor": parceiro})
         else:
             resultado_final["detalhes"].append({"campo": "parceiro", "status": "error", "valor": "Status Desconhecido"})
+
+       # Carrega os modelos ativos de um arquivo externo
+        modelos_ativos = carregar_modelos_ativos_json()
+
+        
 
         # Coleta os dados necessários
         origem = resultado.iloc[0, 8]  # Supondo que "origem" está na nona coluna
