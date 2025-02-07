@@ -37,11 +37,12 @@ def buscar_device(df):
         if result["status"] == "success":
 
             # Exibe a validação da consulta
-            st.success("✅ Dispositivo encontrado com sucesso!!!")
+            st.success("✅ Dispositivo encontrado com sucesso!")
 
             # Armazenar a esteira no estado para uso posterior
             if isinstance(result, dict):
                 st.session_state["esteira"] = result.get("esteira", "Não definida")
+        
                 
 
             
