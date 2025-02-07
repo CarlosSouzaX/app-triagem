@@ -177,7 +177,7 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
    # 2. Verifica RUNOFF
     if (
         #modelo in modelos_ativos and 
-        #status_sr in ["open", "arrived"] and  
+        status_sr in ["open", "arrived"] and  
         runoff == "runoff"  
     ):
         return "RUNOFF"
