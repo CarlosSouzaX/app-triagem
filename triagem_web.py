@@ -65,7 +65,7 @@ with col3:
     
     if esteira:
         st.subheader("📋 Triagem de Dispositivo")
-        st.info(f"Esteira de Atendimento: **{esteira}**")
+        st.exception(f"Esteira de Atendimento: **{esteira}**")
         st.info(f"Modelo: **{model}**")
         st.info(f"IMEI: **{imei}**")
         st.info(f"parceiro: **{parceiro}**")
