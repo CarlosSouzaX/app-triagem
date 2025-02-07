@@ -167,77 +167,30 @@ def buscar_modelo_por_device(df, device_input):
 
 
 def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff, mdm_payjoy, marca, modelo, imei, imei_status, status_sr, modelos_ativos):
-    """
-    Determina a Esteira de Atendimento com base nos dados coletados.
 
-    Args:
-        parceiro (str): Parceiro responsável.
-        origem (str): Origem do atendimento.
-        garantia_funcional (int): Indica se há garantia funcional (1 = Sim, 0 = Não).
-        reincidente (bool): Indica se é um caso reincidente.
-        mdm_payjoy (bool): Indica se o MDM PayJoy está presente.
-        modelo (str): Modelo do dispositivo.
-        imei_status (str): Status do IMEI (success, warning, error).
-        status_sr (str): Status da SR.
-        modelos_ativos (list): Lista de modelos ativos para reparo.
-
-    Returns:
-        str: Nome da Esteira de Atendimento.
-    """
-
-    # Verifica as condições para Garantia Funcional (InHouse - Reparo do Mesmo)
-
+    # 1. Verifica IMEI inválido
     if (
         imei_status != "success" # IMEI deve estar válido
     ):
         return "DEVOLVER AO RECEBIMENTO / CHECAR IMEI PELA NF"
         
-    elif (
-        modelo in modelos_ativos and # Verifica se o modelo está na lista de modelos ativos
-        status_sr in ["open", "arrived"] and  # Status da SR deve ser "open" ou "arrived"
-        not reincidente and  # Não deve ser reincidente 
-        runoff == "runoff"  # Deve ser vazio (não default)
-        #mdm_payjoy != "pay_joy" # Deve ser vazio
+   # 2. Verifica RUNOFF
+    if (
+        modelo in modelos_ativos and 
+        status_sr in ["open", "arrived"] and  
+        not reincidente and  
+        runoff == "runoff"  
     ):
         return "RUNOFF"
     
-    elif (
-        modelo in modelos_ativos and # Verifica se o modelo está na lista de modelos ativos
-        status_sr in ["open", "arrived"] and  # Status da SR deve ser "open" ou "arrived"
-        not reincidente and  # Não deve ser reincidente 
-        parceiro == "Mercado Livre"  # Deve ser vazio (não default)
-        #mdm_payjoy != "pay_joy" # Deve ser vazio
+    # 3. Verifica Mercado Livre (se a condição anterior não for atendida)
+    if (
+        modelo in modelos_ativos and  
+        status_sr in ["open", "arrived"] and  
+        not reincidente and  
+        parceiro == "Mercado Livre"
     ):
         return "RUNOFF"
-    
-    elif (
-        modelo in modelos_ativos and # Verifica se o modelo está na lista de modelos ativos
-        status_sr in ["open", "arrived"] and  # Status da SR deve ser "open" ou "arrived"
-        not reincidente and  # Não deve ser reincidente
-        garantia_funcional == 1 and # Somente Garantias
-        origem == "new" and # Somente Novos
-        runoff == "defaut" and # Deve ser vazio (não default)
-        mdm_payjoy != "pay_joy" # Deve ser vazio
-    ):
-        return "GARANTIA FUNCIONAL"
-    
-    elif (
-    
-        mdm_payjoy != "pay_joy" and # Deve ser vazio
-        reincidente == True 
-    ):
-        return "REINCIDENTE"
-    
-    elif (
-    
-        mdm_payjoy == "pay_joy"
-    ):
-        return "PAYJOY"
-    
-    elif (
-
-    ):
-        return
 
     # Caso nenhuma condição específica seja atendida
     return "PADRÃO 2"
