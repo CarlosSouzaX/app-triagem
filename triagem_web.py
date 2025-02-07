@@ -60,15 +60,23 @@ with col3:
     imei = obter_estado("imei")
     sr = obter_estado("sr")
     parceiro = obter_estado("parceiro")
-    reincidente = obter_estado("reincidente")
 
     
     
     if esteira:
         st.subheader("📋 Triagem de Dispositivo")
+        # Dicionário de cores conforme o valor de 'esteira'
+        cores = {
+            "REINCIDENTE": "#FF4B4B",  # Vermelho
+            "RUNOFF": "#FFD700",       # Amarelo
+            "PADRÃO": "#1E90FF"        # Azul
+        }
+        # Definir a cor com base no valor de 'esteira'
+        cor = cores.get(esteira, "#CCCCCC")  # Cor padrão caso não esteja no dicionário
+
         st.markdown(
             f"""
-            <div style="text-align: center; font-size: 24px; font-weight: bold; padding: 10px; background-color: #d9edf7; color: #31708f; border-radius: 5px;">
+            <div style="text-align: center; font-size: 24px; font-weight: bold; padding: 10px; background-color: {cor}; color: white; border-radius: 5px;">
                 Esteira de Atendimento: <strong>{esteira}</strong>
             </div>
             """,
@@ -77,7 +85,6 @@ with col3:
         st.info(f"Modelo: **{model}**")
         st.info(f"IMEI: **{imei}**")
         st.info(f"Parceiro: **{parceiro}**")
-        st.info(f"**{reincidente}**")
 
         if esteira == "RUNOFF":
             
