@@ -118,9 +118,14 @@ def buscar_modelo_por_device(df, device_input):
        # Carrega os modelos ativos de um arquivo externo
         modelos_ativos = carregar_modelos_ativos_json()
 
-        # Coleta os dados necessários
+        # Verifica o Parceiro
         parceiro = resultado.iloc[0, 7]  # Supondo que "parceiro" está na oitava coluna
-        resultado_final["parceiro"] = parceiro
+        if pd.notnull(parceiro):
+            resultado_final["detalhes"].append({"campo": "parceiro", "status": "success", "valor": parceiro})
+        else:
+            resultado_final["detalhes"].append({"campo": "parceiro", "status": "error", "valor": "Status Desconhecido"})
+
+        # Coleta os dados necessários
         origem = resultado.iloc[0, 8]  # Supondo que "origem" está na nona coluna
         resultado_final["origem"] = origem
         garantia_funcional = resultado.iloc[0, 9]  # Supondo que "garantia_funcional" está na décima coluna
