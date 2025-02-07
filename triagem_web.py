@@ -60,6 +60,7 @@ with col3:
     imei = obter_estado("imei")
     sr = obter_estado("sr")
     parceiro = obter_estado("parceiro")
+
     
     
     if esteira:
