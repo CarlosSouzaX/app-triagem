@@ -184,6 +184,7 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
     Returns:
         str: Nome da Esteira de Atendimento.
     """
+
     # Verifica as condições para Garantia Funcional (InHouse - Reparo do Mesmo)
 
     if (
@@ -239,4 +240,4 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
         return
 
     # Caso nenhuma condição específica seja atendida
-    return "PADRÃO"
+    return "PADRÃO 2"
