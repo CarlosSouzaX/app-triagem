@@ -59,6 +59,7 @@ with col3:
     model = obter_estado("modelo")
     imei = obter_estado("imei")
     sr = obter_estado("sr")
+    parceiro = obter_estado("parceiro")
     
     
     if esteira:
@@ -66,6 +67,7 @@ with col3:
         st.info(f"Esteira de Atendimento: **{esteira}**")
         st.info(f"Modelo: **{model}**")
         st.info(f"IMEI: **{imei}**")
+        st.info(f"parceiro: **{parceiro}")
 
         if esteira == "RUNOFF":
             

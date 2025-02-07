@@ -16,6 +16,7 @@ def inicializar_estado():
         "modelo": None,
         "sr": None,
         "status_sr": None,
+        "parceiro": None,
         # Outros estados
         "observacao_cliente": "",
         # Estados do fluxo
@@ -33,7 +34,7 @@ def resetar_estado(grupo=None):
     inicializar_estado()
     grupos = {
         "fluxo": ["current_question", "responses", "fluxo_finalizado"],
-        "dispositivo": ["device_input", "esteira", "imei", "marca", "modelo", "sr", "status_sr"],
+        "dispositivo": ["device_input", "esteira", "imei", "marca", "modelo", "sr", "status_sr", "parceiro"],
         "global": ["inicializado", "fluxo_finalizado"],
     }
 
