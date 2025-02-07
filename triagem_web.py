@@ -60,6 +60,7 @@ with col3:
     imei = obter_estado("imei")
     sr = obter_estado("sr")
     parceiro = obter_estado("parceiro")
+    reincidente = obter_estado("reincidente")
 
     
     
@@ -76,6 +77,7 @@ with col3:
         st.info(f"Modelo: **{model}**")
         st.info(f"IMEI: **{imei}**")
         st.info(f"Parceiro: **{parceiro}**")
+        st.info(f"**{reincidente}**")
 
         if esteira == "RUNOFF":
             
