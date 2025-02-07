@@ -121,6 +121,14 @@ def buscar_modelo_por_device(df, device_input):
             resultado_final["detalhes"].append({"campo": "parceiro", "status": "success", "valor": parceiro})
         else:
             resultado_final["detalhes"].append({"campo": "parceiro", "status": "error", "valor": "Status Desconhecido"})
+        
+        # Verifica o Parceiro
+        reincidente = resultado.iloc[0, 10]  # Supondo que "parceiro" está na oitava coluna
+        if pd.notnull(reincidente):
+            resultado_final["detalhes"].append({"campo": "reincidente", "status": "success", "valor": reincidente})
+        else:
+            resultado_final["detalhes"].append({"campo": "reincidente", "status": "error", "valor": "Status Desconhecido"})
+
 
        # Carrega os modelos ativos de um arquivo externo
         modelos_ativos = carregar_modelos_ativos_json()
@@ -132,8 +140,6 @@ def buscar_modelo_por_device(df, device_input):
         resultado_final["origem"] = origem
         garantia_funcional = resultado.iloc[0, 9]  # Supondo que "garantia_funcional" está na décima coluna
         resultado_final["garantia_funcional"] = garantia_funcional
-        reincidente = resultado.iloc[0, 10]  # Supondo que "reincidente" está na décima primeira coluna
-        resultado_final["reincidente"] = reincidente
         runoff = resultado.iloc[0, 11]  # Supondo que a flag "runoff" está na décima segunda coluna
         resultado_final["runoff"] = runoff
         mdm_payjoy = resultado.iloc[0, 12]  # Supondo que "mdm_payjoy" está na décima terceira coluna
