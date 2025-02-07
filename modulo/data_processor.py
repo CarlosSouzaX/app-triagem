@@ -193,4 +193,4 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
         return "RUNOFF"
 
     # Caso nenhuma condição específica seja atendida
-    return "PADRÃO 2"
+    return "PADRÃO"
