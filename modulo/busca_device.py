@@ -42,7 +42,7 @@ def buscar_device(df):
             # Armazenar a esteira no estado para uso posterior
             if isinstance(result, dict):
                 st.session_state["esteira"] = result.get("esteira", "Não definida")
-                esteira = result.get("esteira", "Não definida")
+                
 
             
             
@@ -54,6 +54,13 @@ def buscar_device(df):
                 # Exibe dados do Device
                 #st.subheader("📱 Dados do Device")
                  # Exibe o campo com base no status
+                if campo == "parceiro":
+                    if status == "success":
+                        st.success(f"✅ {campo.capitalize()}: **{valor}**")
+                        st.session_state["parceiro"] = valor
+                    elif status == "error":
+                        st.error(f"❌ {campo.capitalize()}: {valor}")
+
                 if campo == "marca":
                     if status == "success":
                         st.success(f"✅ {campo.capitalize()}: **{valor}**")
