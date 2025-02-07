@@ -176,17 +176,9 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
         
    # 2. Verifica RUNOFF
     if (
-        modelo in modelos_ativos and 
+        #modelo in modelos_ativos and 
         status_sr in ["open", "arrived"] and  
-        runoff == "runoff"  
-    ):
-        return "RUNOFF"
-    
-    # 3. Verifica Mercado Livre (se a condição anterior não for atendida)
-    if (
-        modelo in modelos_ativos and  
-        status_sr in ["open", "arrived"] and 
-        parceiro == "Mercado Livre"
+        (runoff == "runoff" or parceiro == "Mercado Livre")
     ):
         return "RUNOFF"
 
