@@ -178,7 +178,6 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
     if (
         modelo in modelos_ativos and 
         status_sr in ["open", "arrived"] and  
-        not reincidente and  
         runoff == "runoff"  
     ):
         return "RUNOFF"
@@ -186,8 +185,7 @@ def determinar_esteira(parceiro, origem, garantia_funcional, reincidente, runoff
     # 3. Verifica Mercado Livre (se a condição anterior não for atendida)
     if (
         modelo in modelos_ativos and  
-        status_sr in ["open", "arrived"] and  
-        not reincidente and  
+        status_sr in ["open", "arrived"] and 
         parceiro == "Mercado Livre"
     ):
         return "RUNOFF"
